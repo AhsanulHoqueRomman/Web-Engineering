@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    form {
+      max-width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="validationForm" novalidate>
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+    <div id="nameError" class="error"></div>
+
+    <label for="id">Student ID:</label>
+    <input type="text" id="id" required placeholder="e.g. 221-15-5330">
+    <div id="idError" class="error"></div>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required placeholder="e.g. hoqueromman@diu.edu.bd">
+    <div id="emailError" class="error"></div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('validationForm');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); 
+
+    
+      const name = document.getElementById('name').value.trim();
+      const id = document.getElementById('id').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      
+      const nameError = document.getElementById('nameError');
+      const idError = document.getElementById('idError');
+      const emailError = document.getElementById('emailError');
+
+      
+      nameError.textContent = '';
+      idError.textContent = '';
+      emailError.textContent = '';
+
+     
+      const nameValid = name.length >= 4;
+      const idPattern = /^\d{3}-\d{2}-\d{4}$/;
+      const emailPattern = /^[a-z0-9._%+-]+@diu\.edu\.bd$/;
+
+      let isValid = true;
+
+      
+      if (!nameValid) {
+        nameError.textContent = 'Name must be more than 3 characters.';
+        isValid = false;
+      }
+
+    
+      if (!idPattern.test(id)) {
+        idError.textContent = 'ID must match the format 221-15-5330.';
+        isValid = false;
+      }
+
+      
+      if (!emailPattern.test(email)) {
+        emailError.textContent = 'Email must end with @diu.edu.bd.';
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert('Form submitted successfully!');
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
